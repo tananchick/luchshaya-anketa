@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ДОСЬЕ // КГБ КПМ // СОВЕРШЕННО СЕКРЕТНО</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
   :root {
     --red: #cc1a1a;
     --red-dark: #8b0000;
     --red-dim: #5a0000;
-    --red-glow: rgba(200,26,26,0.12);
+    --red-glow: rgba(200,26,26,0.15);
+    --amber: #c47a1a;
     --paper: #0a0a0a;
     --surface: #111111;
     --surface2: #181818;
@@ -20,10 +21,12 @@
     --text: #d4c8b8;
     --text-dim: #7a6a5a;
     --text-muted: #3a3030;
+    --green: #1a6633;
     --green-bright: #22a84a;
-    --amber: #c47a1a;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     background: var(--paper);
     color: var(--text);
@@ -31,259 +34,709 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
+
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
     pointer-events: none;
     z-index: 9999;
   }
 
-  .warning {
-    background: repeating-linear-gradient(45deg, var(--red-dark), var(--red-dark) 8px, #1a0000 8px, #1a0000 16px);
-    padding: 7px 16px;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: #ffaaaa;
-    font-family: 'Oswald', sans-serif;
-    font-weight: 600;
-  }
-
+  /* === HEADER === */
   .header {
     background: var(--red-dark);
     border-bottom: 3px solid var(--red);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
+
   .header-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 7px 24px;
+    padding: 8px 24px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
+
   .header-classification {
     font-family: 'Oswald', sans-serif;
     font-weight: 600;
     font-size: 11px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     color: #ffcccc;
     animation: blink 2s step-end infinite;
   }
-  @keyframes blink { 50% { opacity: 0.4; } }
-  .header-id { font-size: 10px; color: rgba(255,200,200,0.6); letter-spacing: 2px; }
+
+  @keyframes blink {
+    50% { opacity: 0.4; }
+  }
+
+  .header-id {
+    font-size: 10px;
+    color: rgba(255,200,200,0.6);
+    letter-spacing: 2px;
+  }
+
   .header-main {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 10px 24px;
+    padding: 12px 24px;
   }
+
   .header-emblem {
-    width: 40px; height: 40px;
+    width: 44px;
+    height: 44px;
     border: 2px solid rgba(255,200,200,0.5);
-    display: flex; align-items: center; justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: 'Oswald', sans-serif;
-    font-size: 20px; font-weight: 600; color: #ffcccc;
-    flex-shrink: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffcccc;
   }
-  .header-title { flex: 1; }
+
+  .header-title {
+    flex: 1;
+  }
+
   .header-title h1 {
     font-family: 'Oswald', sans-serif;
-    font-size: 18px; font-weight: 600; letter-spacing: 3px; color: #fff; line-height: 1;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #fff;
+    line-height: 1;
   }
-  .header-title p { font-size: 10px; letter-spacing: 2px; color: rgba(255,200,200,0.7); margin-top: 2px; }
+
+  .header-title p {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,200,200,0.7);
+    margin-top: 2px;
+  }
+
+  .header-status {
+    text-align: right;
+  }
+
   .status-dot {
-    display: inline-block; width: 8px; height: 8px;
-    background: var(--green-bright); border-radius: 50%; margin-right: 6px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--green-bright);
+    border-radius: 50%;
+    margin-right: 6px;
     animation: pulse 1.5s ease-in-out infinite;
   }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-  .status-text { font-size: 11px; letter-spacing: 2px; color: var(--green-bright); }
 
-  .layout {
-    display: grid;
-    grid-template-columns: 260px 1fr;
-    min-height: calc(100vh - 120px);
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
   }
 
-  /* SIDEBAR */
-  .sidebar {
-    background: var(--surface2);
-    border-right: 1px solid var(--border);
+  .status-text {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--green-bright);
+  }
+
+  /* === TABS === */
+  .tabs {
     display: flex;
-    flex-direction: column;
-    gap: 0;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .tab:hover {
+    color: var(--text);
+    background: var(--red-glow);
+  }
+
+  .tab.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+    background: var(--red-glow);
+  }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+  }
+
+  /* === SIDEBAR === */
+  .sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;           
+}
+
+  .photo-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
   }
 
   .photo-frame {
     aspect-ratio: 3/4;
     background: var(--surface3);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
   }
-  .photo-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
-  .photo-frame::after {
+
+  .photo-frame::before {
     content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(45deg, rgba(139,0,0,0.25) 0%, transparent 40%);
-    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(45deg, var(--red-dark) 0%, transparent 30%),
+      linear-gradient(135deg, transparent 70%, var(--red-dim) 100%);
+    opacity: 0.4;
   }
-  .photo-stamp {
-    position: absolute; top: 12px; right: 12px;
-    border: 2px solid rgba(34,168,74,0.7); color: rgba(34,168,74,0.7);
-    padding: 2px 8px; font-size: 9px; letter-spacing: 2px;
-    transform: rotate(8deg);
-    font-family: 'Oswald', sans-serif; font-weight: 600; z-index: 1;
-  }
-  .photo-label {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 5px 8px; background: rgba(139,0,0,0.85);
-    font-size: 9px; letter-spacing: 3px; text-align: center; color: #ffcccc;
+
+  .crosshair {
+    position: relative;
     z-index: 1;
+    opacity: 0.4;
+  }
+
+  .crosshair::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border: 1px solid var(--red);
+    border-radius: 50%;
+  }
+
+  .crosshair::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 1px;
+    background: var(--red);
+    box-shadow: 0 -50px 0 0 var(--red), 0 50px 0 0 var(--red);
+  }
+
+  .photo-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 6px 8px;
+    background: rgba(139,0,0,0.8);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-align: center;
+    color: #ffcccc;
+  }
+
+  .photo-stamp {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    border: 2px solid rgba(34,168,74,0.7);
+    color: rgba(34,168,74,0.7);
+    padding: 2px 8px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    transform: rotate(8deg);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+  }
+
+  .photo-id {
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-dim);
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* === PANEL === */
+  .panel {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    overflow: hidden;
   }
 
   .panel-header {
     background: var(--red-dark);
-    padding: 7px 12px;
-    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     border-bottom: 1px solid var(--border);
-    border-top: 1px solid var(--border);
   }
-  .panel-icon { width: 6px; height: 6px; background: #ffaaaa; border-radius: 50%; flex-shrink: 0; }
-  .panel-title { font-size: 10px; letter-spacing: 3px; color: #ffcccc; font-family: 'Oswald', sans-serif; font-weight: 400; }
 
-  .fields { padding: 4px 0; }
-  .field { padding: 7px 12px; border-bottom: 1px solid var(--border-dim); }
+  .panel-icon {
+    width: 6px;
+    height: 6px;
+    background: #ffaaaa;
+    border-radius: 50%;
+  }
+
+  .panel-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #ffcccc;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+  }
+
+  .panel-body { padding: 12px; }
+
+  /* === DATA FIELDS === */
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-dim);
+  }
+
   .field:last-child { border-bottom: none; }
-  .field-label { font-size: 9px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; display: block; margin-bottom: 2px; }
-  .field-value { font-size: 12px; color: var(--text); line-height: 1.4; display: block; }
+
+  .field-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .field-value {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
   .field-value.red { color: var(--red); }
   .field-value.amber { color: var(--amber); }
   .field-value.green { color: var(--green-bright); }
 
-  .stat { padding: 5px 12px; }
-  .stat-header { display: flex; justify-content: space-between; margin-bottom: 3px; }
-  .stat-name { font-size: 9px; letter-spacing: 1px; color: var(--text-dim); }
-  .stat-val { font-size: 9px; color: var(--red); }
-  .stat-bar { height: 2px; background: var(--surface3); border: 1px solid var(--border-dim); position: relative; overflow: hidden; }
-  .stat-fill { height: 100%; background: var(--red); position: relative; }
-  .stat-fill::after { content: ''; position: absolute; right: 0; top: 0; width: 3px; height: 100%; background: #ff6666; }
+  /* === STAT BARS === */
+  .stat { padding: 6px 0; }
 
-  /* RIGHT SIDE */
-  .right {
+  .stat-header {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 80px;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .stat-name { font-size: 10px; letter-spacing: 1px; color: var(--text-dim); }
+  .stat-val { font-size: 10px; color: var(--red); }
+
+  .stat-bar {
+    height: 3px;
+    background: var(--surface3);
+    border: 1px solid var(--border-dim);
     position: relative;
     overflow: hidden;
   }
-  .right::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 50%, rgba(139,0,0,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 50%, rgba(139,0,0,0.04) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .right::after {
-    content: '//';
-    position: absolute;
-    top: 32px; right: 40px;
-    font-size: 48px;
-    color: rgba(200,26,26,0.06);
-    font-family: 'Share Tech Mono', monospace;
-    letter-spacing: -4px;
+
+  .stat-fill {
+    height: 100%;
+    background: var(--red);
+    position: relative;
+    transition: width 1s ease;
   }
 
-  .main-text-block {
-    position: relative;
-    max-width: 640px;
-    border-left: 3px solid var(--red-dark);
-    padding-left: 32px;
-  }
-  .main-text-block::before {
-    content: 'СУБЪЕКТ';
+  .stat-fill::after {
+    content: '';
     position: absolute;
-    top: -28px; left: 0;
-    font-size: 9px; letter-spacing: 4px; color: var(--text-dim);
+    right: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: #ff6666;
+  }
+
+  /* === MAIN CONTENT === */
+  .main { display: flex; flex-direction: column; gap: 16px; }
+
+  .section { display: none; }
+  .section.active { display: flex; flex-direction: column; gap: 16px; }
+
+  /* === BIO BLOCK === */
+  .bio-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--text);
+    padding: 14px;
+    border-left: 3px solid var(--red-dark);
+    background: var(--surface3);
+    position: relative;
+  }
+
+  .bio-text::before {
+    content: '//';
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 20px;
+    color: var(--border-dim);
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  /* === TIMELINE === */
+  .timeline { position: relative; padding-left: 20px; }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -14px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    background: var(--red-dark);
+    border: 1px solid var(--red);
+    transform: rotate(45deg);
+  }
+
+  .tl-date {
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .tl-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .tl-text {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+
+  /* === DIALOGUE BOX === */
+  .dialogue {
+    background: var(--surface3);
+    border: 1px solid var(--border-dim);
+    border-left: 3px solid var(--amber);
+    padding: 12px 14px;
+    margin: 8px 0;
+  }
+
+  .dialogue-meta {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+
+  .dialogue-line {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--text-dim);
+    font-style: italic;
+    padding: 3px 0;
+    border-bottom: 1px solid var(--border-dim);
+  }
+
+  .dialogue-line:last-child { border-bottom: none; }
+
+  .dialogue-line .speaker {
+    color: var(--text);
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  /* === TRAIT CARDS === */
+  .traits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .trait-card {
+    background: var(--surface3);
+    border: 1px solid var(--border-dim);
+    border-top: 2px solid var(--red-dark);
+    padding: 12px;
+  }
+
+  .trait-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--red);
+    margin-bottom: 6px;
     font-family: 'Oswald', sans-serif;
   }
 
-  .main-text {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 15px;
-    line-height: 2.4;
-    color: var(--text);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .trait-line {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    padding: 2px 0;
-    border-bottom: 1px solid var(--border-dim);
-    opacity: 0;
-    transform: translateX(-10px);
-    animation: fadein 0.4s ease forwards;
-  }
-  .trait-line:last-child { border-bottom: none; }
-  .trait-line:nth-child(1) { animation-delay: 0.1s; }
-  .trait-line:nth-child(2) { animation-delay: 0.2s; }
-  .trait-line:nth-child(3) { animation-delay: 0.3s; }
-  .trait-line:nth-child(4) { animation-delay: 0.4s; }
-  .trait-line:nth-child(5) { animation-delay: 0.5s; }
-  .trait-line:nth-child(6) { animation-delay: 0.6s; }
-  @keyframes fadein { to { opacity: 1; transform: translateX(0); } }
-
-  .trait-num {
-    font-size: 9px;
-    color: var(--red);
-    letter-spacing: 2px;
-    flex-shrink: 0;
-    width: 24px;
-    user-select: none;
-  }
   .trait-text {
-    font-size: 14px;
-    color: var(--text);
-    letter-spacing: 0.5px;
-    line-height: 1.5;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text-dim);
   }
 
-  .photo-id {
-    padding: 7px 12px;
-    display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid var(--border-dim);
-    font-size: 9px; color: var(--text-dim); letter-spacing: 1px;
-    background: var(--surface3);
+  /* === TAG LIST === */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0; }
+
+  .tag {
+    padding: 3px 10px;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--text-dim);
   }
 
+  .tag.red {
+    border-color: var(--red);
+    color: var(--red);
+    background: var(--red-glow);
+  }
+
+  .tag.amber {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  /* === REDACTED === */
+  .redacted {
+    background: #222;
+    color: #222;
+    padding: 0 4px;
+    user-select: none;
+    letter-spacing: 0;
+    cursor: default;
+  }
+
+  /* === WARNING BANNER === */
+  .warning {
+    background: repeating-linear-gradient(
+      45deg,
+      var(--red-dark),
+      var(--red-dark) 8px,
+      #1a0000 8px,
+      #1a0000 16px
+    );
+    padding: 8px 16px;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #ffaaaa;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+  }
+
+  /* === FOOTER === */
   .footer {
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 9px 24px;
+    padding: 10px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 9px;
     color: var(--text-muted);
     letter-spacing: 2px;
+    margin-top: 24px;
   }
 
+  /* === SCROLLBAR === */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--paper); }
   ::-webkit-scrollbar-thumb { background: var(--red-dark); }
 
-  @media (max-width: 700px) {
-    .layout { grid-template-columns: 1fr; }
-    .right { padding: 40px 24px; }
-    .main-text-block { padding-left: 16px; }
+  /* === MOBILE UI REWORK (APP-LIKE) === */
+@media (max-width: 768px) {
+
+  /* === BASE === */
+  body {
+    font-size: 14px;
   }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .main {
+    gap: 12px;
+  }
+
+  /* === HEADER === */
+  .header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .header-title h1 {
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+
+  .header-title p {
+    font-size: 9px;
+  }
+
+  .header-emblem {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  /* === TABS (APP STYLE NAV) === */
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background: var(--surface);
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px 6px;
+    font-size: 10px;
+  }
+
+  /* === SIDEBAR → TOP DOSSIER === */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .photo-card {
+    width: 100%;
+    order: 1;
+  }
+
+  .photo-frame {
+    height: auto !important;
+    aspect-ratio: 3/4;
+  }
+
+  .sidebar .panel {
+    order: 2;
+  }
+
+  /* === PANELS === */
+  .panel-body {
+    padding: 10px;
+  }
+
+  .panel-title {
+    font-size: 9px;
+  }
+
+  /* === TEXT === */
+  .field-value {
+    font-size: 14px;
+  }
+
+  .bio-text {
+    font-size: 14px;
+    line-height: 1.7;
+    padding: 12px;
+  }
+
+  /* === STATS (COMPACT) === */
+  .stat {
+    padding: 4px 0;
+  }
+
+  .stat-bar {
+    height: 2px;
+  }
+
+  /* === TRAITS === */
+  .traits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* === TIMELINE === */
+  .tl-title {
+    font-size: 13px;
+  }
+
+  .tl-text {
+    font-size: 12px;
+  }
+
+  /* === DIALOGUE === */
+  .dialogue-line {
+    font-size: 12px;
+  }
+
+  /* === FOOTER === */
+  .footer {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    font-size: 8px;
+  }
+}
+ 
 </style>
 </head>
 <body>
@@ -301,103 +754,548 @@
       <h1>КГБ КРАСНОЙ ЛИНИИ</h1>
       <p>КОМИТЕТ ГОСУДАРСТВЕННОЙ БЕЗОПАСНОСТИ // МОСКОВСКИЙ МЕТРОПОЛИТЕН // 2033 Г.</p>
     </div>
-    <div>
-      <span class="status-dot"></span><span class="status-text">АКТИВНО</span>
+    <div class="header-status">
+      <div><span class="status-dot"></span><span class="status-text">АКТИВНО</span></div>
     </div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('overview', this)">[ ОБЗОР ]</div>
+    <div class="tab" onclick="showSection('bio', this)">[ БИОГРАФИЯ ]</div>
+    <div class="tab" onclick="showSection('psych', this)">[ ПСИХ. ПРОФИЛЬ ]</div>
+    <div class="tab" onclick="showSection('korbot', this)">[ ОПЕРАЦИЯ «ГЕНСЕК» ]</div>
+    <div class="tab" onclick="showSection('medical', this)">[ МЕД. КАРТА ]</div>
   </div>
 </div>
 
-<div class="layout">
+<div class="container">
 
+  <!-- SIDEBAR -->
   <div class="sidebar">
-    <div class="photo-frame">
-      <img src="photo.jpg" alt="Фото на досье">
-      <div class="photo-stamp">ПОДТВ.</div>
-      <div class="photo-label">ФОТО НА ДОСЬЕ // КЛ-009</div>
-    </div>
-    <div class="photo-id">
-      <span>ID: ФЭН-032-КЛ</span>
-      <span>НЯБ. 2033</span>
-    </div>
 
-    <div class="panel-header">
-      <div class="panel-icon"></div>
-      <span class="panel-title">ИДЕНТИФИКАЦИЯ</span>
-    </div>
-    <div class="fields">
-      <div class="field">
-        <span class="field-label">настоящее имя</span>
-        <span class="field-value">Саран Фэн</span>
-      </div>
-      <div class="field">
-        <span class="field-label">позывной</span>
-        <span class="field-value red">ФЭЙСЯО // «Летящее Копьё»</span>
-      </div>
-      <div class="field">
-        <span class="field-label">возраст</span>
-        <span class="field-value">40 лет</span>
-      </div>
-      <div class="field">
-        <span class="field-label">происхождение</span>
-        <span class="field-value">Пекин, КНР</span>
-      </div>
-      <div class="field">
-        <span class="field-label">звание</span>
-        <span class="field-value red">Генеральный Секретарь ЦК КПМ</span>
-      </div>
-      <div class="field">
-        <span class="field-label">группировка</span>
-        <span class="field-value">Красная Линия</span>
-      </div>
-      <div class="field">
-        <span class="field-label">угроза</span>
-        <span class="field-value amber">КРИТИЧЕСКАЯ</span>
+    <div class="photo-card">
+      <div class="photo-frame" style="height: 280px;">
+          <a href="photo.jpg">
+            <img src="photo.jpg" style="width:100%; height:100%; object-fit:cover; object-position:center; cursor:zoom-in; display:block;">
+          </a>
+          <div class="photo-stamp">ПОДТВ.</div>
+          <div class="photo-label">ФОТО НА ДОСЬЕ // КЛ-009</div>
+        </div>
+      <div class="photo-id">
+        <span>ID: ФЭН-032-КЛ</span>
+        <span>НЯБ. 2033</span>
       </div>
     </div>
 
-    <div class="panel-header">
-      <div class="panel-icon"></div>
-      <span class="panel-title">ПОКАЗАТЕЛИ</span>
+    <div class="panel">
+      <div class="panel-header" onclick="togglePanel(this)">
+        <div class="panel-icon"></div>
+        <span class="panel-title">ИДЕНТИФИКАЦИЯ</span>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <span class="field-label">настоящее имя</span>
+          <span class="field-value">Саран Фэн</span>
+        </div>
+        <div class="field">
+          <span class="field-label">позывной / псевдоним</span>
+          <span class="field-value red">ФЭЙСЯО // «Летящее Копьё»</span>
+        </div>
+        <div class="field">
+          <span class="field-label">имя в метро</span>
+          <span class="field-value">Фэн Фэйсяо</span>
+        </div>
+        <div class="field">
+  <span class="field-label">дата рождения</span>
+  <span class="field-value">17 марта 1993 г.</span>
+</div>
+<div class="field">
+  <span class="field-label">возраст</span>
+  <span class="field-value">40 лет</span>
+</div>
+        <div class="field">
+          <span class="field-label">происхождение</span>
+          <span class="field-value">Пекин, КНР</span>
+        </div>
+        <div class="field">
+          <span class="field-label">звание</span>
+          <span class="field-value red">Генеральный Секретарь ЦК КПМ</span>
+        </div>
+        <div class="field">
+          <span class="field-label">бывшее звание</span>
+          <span class="field-value">Лейтенант НОАК</span>
+        </div>
+        <div class="field">
+          <span class="field-label">местонахождение</span>
+          <span class="field-value">«Проспект Маркса» (осн.) / «Площадь Революции»</span>
+        </div>
+        <div class="field">
+          <span class="field-label">угроза</span>
+          <span class="field-value amber">КРИТИЧЕСКАЯ</span>
+        </div>
+      </div>
     </div>
-    <div style="padding: 8px 0 12px;">
-      <div class="stat"><div class="stat-header"><span class="stat-name">ФИЗПОДГОТОВКА</span><span class="stat-val">96</span></div><div class="stat-bar"><div class="stat-fill" style="width:96%"></div></div></div>
-      <div class="stat"><div class="stat-header"><span class="stat-name">ТАКТИКА</span><span class="stat-val">99</span></div><div class="stat-bar"><div class="stat-fill" style="width:99%"></div></div></div>
-      <div class="stat"><div class="stat-header"><span class="stat-name">РУКОПАШНЫЙ БОЙ</span><span class="stat-val">94</span></div><div class="stat-bar"><div class="stat-fill" style="width:94%"></div></div></div>
-      <div class="stat"><div class="stat-header"><span class="stat-name">ХАРИЗМА / ЛИДЕРСТВО</span><span class="stat-val">97</span></div><div class="stat-bar"><div class="stat-fill" style="width:97%"></div></div></div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-icon"></div>
+        <span class="panel-title">БОЕВЫЕ ПОКАЗАТЕЛИ</span>
+      </div>
+      <div class="panel-body">
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">ФИЗПОДГОТОВКА</span><span class="stat-val">96</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:96%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">ТАКТИКА</span><span class="stat-val">99</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:99%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">РУКОПАШНЫЙ БОЙ</span><span class="stat-val">94</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:94%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">СТРЕЛЬБА</span><span class="stat-val">89</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:89%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">ПСИХОЛ. УСТОЙЧИВОСТЬ</span><span class="stat-val">88</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:88%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">ХАРИЗМА / ЛИДЕРСТВО</span><span class="stat-val">97</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:97%"></div></div>
+        </div>
+        <div class="stat">
+          <div class="stat-header"><span class="stat-name">СТРАТЕГИЧ. МЫШЛЕНИЕ</span><span class="stat-val">99</span></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:99%"></div></div>
+        </div>
+      </div>
     </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-icon"></div>
+        <span class="panel-title">ВООРУЖЕНИЕ</span>
+      </div>
+      <div class="panel-body">
+        <div class="field">
+          <span class="field-label">основное</span>
+          <span class="field-value">QSZ-92 (китайский армейский пистолет)</span>
+        </div>
+        <div class="field">
+          <span class="field-label">вспомогательное</span>
+          <span class="field-value">Метательные ножи (x4–6)</span>
+        </div>
+        <div class="field">
+          <span class="field-label">специальное</span>
+          <span class="field-value">Пневматический «Тихарь» (бесшумные операции)</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <div class="right">
-    <div class="main-text-block">
-      <div class="main-text">
-        <div class="trait-line">
-          <span class="trait-num">01</span>
-          <span class="trait-text">Курит сигареты</span>
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- OVERVIEW -->
+    <div class="section active" id="section-overview">
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">КРАТКОЕ РЕЗЮМЕ</span>
         </div>
-        <div class="trait-line">
-          <span class="trait-num">02</span>
-          <span class="trait-text">Эмпатична</span>
-        </div>
-        <div class="trait-line">
-          <span class="trait-num">03</span>
-          <span class="trait-text">Обучена стрельбе и военному делу</span>
-        </div>
-        <div class="trait-line">
-          <span class="trait-num">04</span>
-          <span class="trait-text">Обучена полевой и базы медицины</span>
-        </div>
-        <div class="trait-line">
-          <span class="trait-num">05</span>
-          <span class="trait-text">Не пьёт ничего кроме воды</span>
-        </div>
-        <div class="trait-line">
-          <span class="trait-num">06</span>
-          <span class="trait-text">Мазохистка</span>
+        <div class="panel-body">
+          <div class="bio-text">
+            Фэн Фэйсяо — действующий Генеральный Секретарь ЦК Коммунистической Партии Московского Метрополитена. В прошлом лейтенант НОАК, командированная в Москву в рамках секретного российско-китайского проекта «Шёлковый Щит». После ядерной катастрофы примкнула к Красной Линии, сделала карьеру под руководством Корбута и в июне 2033 года, в результате тщательно спланированного заговора, сместила прежнего Генсека Москвина, обвинив его в коррупции и отступлении от линии партии. Расстрелян по приговору Политбюро. Сам факт заговора полностью скрыт, за помощь и поддержку во многом опирается на Генерала армии и курирует его интересы.
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">КЛЮЧЕВЫЕ СОБЫТИЯ — 2033 ГОД</span>
+        </div>
+        <div class="panel-body">
+          <div class="timeline">
+            <div class="tl-item">
+  	<div class="tl-date">МАЙ 2033</div>
+  	<div class="tl-title">Битва за «Комсомольскую»</div>
+  	<div class="tl-text">Ганза временно захватила «Комсомольскую». Фэйсяо, ещё в звании полковника Красной Армии под командованием Корбута, лично присутствовала на финальной фазе контрнаступления, сыграв ключевую роль в операции. Станция возвращена. Ганза вынуждена подписать мир и взять на себя обязательство восстановить станцию за свой счёт.</div>
+</div>
+	<div class="tl-item">
+  	<div class="tl-date">ИЮН 2033</div>
+  	<div class="tl-title">Переворот. Москвин расстрелян.</div>
+  	<div class="tl-text">Совместно с Корбутом реализован план по смещению Генсека. Москвин публично обвинён в коррупции и отступлении от линии партии. Заседание Политбюро было закрытым и коротким, результат предрешён заранее. Расстрелян. Фэйсяо становится Генеральным Секретарём ЦК КПМ.</div>
+</div>
+	<div class="tl-item">
+  	<div class="tl-date">СЕН 2033</div>
+  	<div class="tl-title">Инцидент с телом Ленина</div>
+  	<div class="tl-text"><span class="redacted">Анархисты</span> угнали траурный поезд с телом Ленина. Фэйсяо совместно с Корбутом принимает решение публично возложить вину на Рейх. Истинные виновники — <span class="redacted">АНАРХИСТЫ // ЗАКРЫТО</span>. Инцидент используется как casus belli для активизации войны.</div>
+</div>
+	<div class="tl-item">
+  	<div class="tl-date">НОЯ 2033</div>
+  	<div class="tl-title">Активизация войны с Рейхом</div>
+  	<div class="tl-text">Красная Линия начинает методичное наступление на юго-восток. Одновременно Рейх активизируется у «Проспекта Мира», вынуждая Ганзу реагировать. Фэйсяо координирует боевые действия лично — первая крупная операция в статусе Генсека.</div>
+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">БОЕВАЯ ПОДГОТОВКА</span>
+        </div>
+        <div class="panel-body">
+          <div class="tags">
+            <span class="tag red">Саньда (НОАК)</span>
+            <span class="tag red">Шуайцзяо</span>
+            <span class="tag red">Цинь-на</span>
+            <span class="tag amber">Тактика малых групп</span>
+            <span class="tag amber">Операции на поверхности</span>
+            <span class="tag amber">Бесшумное устранение</span>
+            <span class="tag">Стрелковая подготовка</span>
+            <span class="tag">Топография метро</span>
+            <span class="tag">Протоколы хим. защиты</span>
+            <span class="tag">Криптография</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BIOGRAPHY -->
+    <div class="section" id="section-bio">
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ПЕКИН // ДО КАТАСТРОФЫ</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Родилась в Пекине в образцовой семье. Отец — высокопоставленный партийный работник, мать — профессор филологии. Дом строгий, книжный. С детства усвоила два закона: дисциплина — основа порядка, сила — единственный язык, который мир понимает без переводчика. Отказалась от карьеры в кабинетах. Поступила в военное училище сама, без протекции, блестяще сдав экзамены. Прозвище «Фэйсяо» (пер. «Летящее Копьё») получила от сослуживцев в Академии. Ей пророчили карьеру в НОАК, скорость развития которой была бы невиданна ранее.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ПРОЕКТ «ШЁЛКОВЫЙ ЩИТ» // СЕКРЕТНО</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Включена в сверхсекретный российско-китайский проект «Шёлковый Щит» — создание системы обороны и протоколов выживания при глобальном катаклизме. Командирована в Москву как ключевой военный координатор с китайской стороны. Во время плановой проверки оборудования произошёл небольшой, по меркам таких объектов, взрыв. Отлетела спиной к раскалённой металлической опоре. Шрам на спине, между лопаток — отпечаток горячего металла сквозь ткань. Ударилась затылком. Медики заняты более пострадавшими. Она не сказала ни слова. Шрам зажил. Последствия для нейронной системы — нет. Факт проишествия скрывает, ссылаясь на неудачную татуировку.
+          </div>
+          <div style="margin-top: 10px; padding: 8px; border: 1px solid rgba(196,122,26,0.3); background: rgba(196,122,26,0.05);">
+            <span style="font-size: 9px; letter-spacing: 2px; color: var(--amber);">ПРИМЕЧАНИЕ МЕД. ОТДЕЛА:</span>
+            <p style="font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.6;">Черепно-мозговая травма зафиксирована ретроспективно. На момент инцидента в медицинской карточке не отражена. Диагноз — <span class="redacted">ЭПИЛЕПСИЯ ГИППОКАМП</span> — установлен значительно позже. Субъект скрывал симптомы на протяжении <span class="redacted">X</span> лет.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">6 ИЮЛЯ 2013 // ДЕНЬ КАТАСТРОФЫ</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Ядерные удары застала в московском бункере — прямо на глубине, во время итоговой проверки систем «Щита». Связь с Пекином оборвалась на третьей минуте. Пока другие впали в панику, её ум, годами тренировавшийся на худших сценариях, начал работать с жестокой ясностью и прагматизмом. Родина пала. Пекин — пепел. Миссия изменилась: выжить. Используя знания протоколов «Щита», вывела группу уцелевших коллег на станцию «Красные Ворота». Это стало первым сырьём нового порядка.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ВСТУПЛЕНИЕ В КРАСНУЮ ЛИНИЮ</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Примкнула к Красной Линии из-за их идеи ленинизма в их чистом, не замутнённом бюрократией виде — равенство как принцип, коллективизм как выживание. Они были единственным, что казалось ей честным в новом мире. Военный опыт вывел на должность быстро. Лёгкий акцент в русском сохранила намеренно: для своих добавляло харизмы, для чужих создавало иллюзию «чужачки, которая не до конца понимает». Ловушка работала исправно. Сделала карьеру. Стала одним из лучших командиров линии. Обратила на себя внимание Корбута.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PSYCH -->
+    <div class="section" id="section-psych">
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ОБЩИЙ ПРОФИЛЬ</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Фэйсяо — не жёсткая в том смысле, в каком жёсткими бывают люди, сросшиеся с ненавистью или властью. Она жёсткая, как хорошо закалённый металл, — при ударе не ломается и не гнётся, а отдаёт силу обратно. Говорит прямо, смотрит в глаза, не тратит времени на театр. Старается помнить имена и шрамы каждого бойца. Заразительно смеётся. Легко парирует колкости. Её обаяние — это не маска и не манипуляция, а настоящая она. Но попробуйте солгать ей. В долю секунды с лица исчезает всё. Остаётся холодное, абсолютно точное понимание ситуации. Она видит ложь раньше, чем та заканчивается. Последствия лжи вам не понравятся.
+          </div>
+        </div>
+      </div>
+
+      <div class="traits-grid">
+        <div class="trait-card">
+          <div class="trait-title">ПРЯМОЛИНЕЙНОСТЬ</div>
+          <div class="trait-text">Говорит то, что думает, без дипломатических смягчений. Приказы отдаёт без намёков. Ждёт того же от подчинённых.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-title">ОТСУТСТВИЕ СОЖАЛЕНИЙ</div>
+          <div class="trait-text">Сожаление разъедает душу — её слова. Принятые решения не пересматривает. Ошибки анализирует как обыденные данные, а не как повод для вины.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-title">ЦЕЛЬ ЗА ГОРИЗОНТОМ</div>
+          <div class="trait-text">Истинная цель — не победа над Рейхом. Построить государство, достаточно сильное для системного возвращения на поверхность. Не озвучивает никому.</div>
+        </div>
+        <div class="trait-card">
+          <div class="trait-title">ВНУТРЕННИЙ КОМПАС</div>
+          <div class="trait-text">Наставник — опальный полковник Чжан: «Сила, которой боятся — тупая. Сила, которую уважают — оружие тонкой настройки». Мысленно советуется с ним в сложных дилеммах.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ХАРАКТЕРНЫЕ ПАТТЕРНЫ ПОВЕДЕНИЯ</span>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <span class="field-label">реакция на обман</span>
+            <span class="field-value">Немедленная, безэмоциональная. Видит ложь раньше, чем та заканчивается. Бьёт в слабое место без колебаний и без последующего сожаления.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">отношения с подчинёнными</span>
+            <span class="field-value">Равные в бытовом плане, авторитарные в боевом. Помнит имена и истории. Называет их уважительно. Однако её приверженность к пропаганде всё ещё вселяет страх в бойцов.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">реакция на угрозу</span>
+            <span class="field-value">Холодная ясность. Немедленный переход к анализу. Никакой паники.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">одиночество</span>
+            <span class="field-value">Раз в неделю ночью уходит в заброшенный тоннель. Задаёт вопросы вслух, на китайском. Единственный способ справиться с призраками прошлого.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">имя</span>
+            <span class="field-value">Никто в метро не знает имени «Саран». Если кто-то услышит его — это будет постиктальный момент, в тоннеле, в темноте, когда она думает, что одна.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- KORBOT OPERATION -->
+    <div class="section" id="section-korbot">
+
+      <div class="warning" style="margin: 0;">ОПЕРАЦИЯ «ГЕНСЕК» // СВЕДЕНИЯ О ЗАГОВОРЕ // УР. ДОСТУПА: ГЛАВА КГБ</div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ПРЕДЫСТОРИЯ: КОРБУТ И ФЭЙСЯО</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Чеслав Корбут и Фэйсяо познакомились в первые годы после катастрофы. Между ними долго оставалась дистанция взаимного изучения — каждый оценивал другого с профессиональным интересом и профессиональной осторожностью. Корбут предпочитал подводить к выводам так, чтобы собеседник делал их сам. Она видела это и не возражала — потому что выводы были правильными. Три зафиксированных разговора, ставших поворотными.
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">РАЗГОВОР I // ТОННЕЛЬ «ДЗЕРЖИНСКАЯ–КРАСНЫЕ ВОРОТА»</span>
+        </div>
+        <div class="panel-body">
+          <div style="font-size: 10px; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 10px;">РАСШИФРОВКА АГЕНТУРНОГО ДОНЕСЕНИЯ // ДАТИРОВКА ПРЕДПОЛОЖИТЕЛЬНАЯ</div>
+          <div class="dialogue">
+  <div class="dialogue-meta">// РАСШИФРОВКА АГЕНТУРНОГО ДОНЕСЕНИЯ // ДАТИРОВКА ПРЕДПОЛОЖИТЕЛЬНАЯ // ИСТОЧНИК — АГЕНТ «ТИХОНЯ» //</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Вы понимаете, что Москвин ведёт линию к стене? Не потому что плохой коммунист, а потому что он коммунист сорокалетней давности. Мир изменился — метод остался прежним. Это плохое уравнение.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Это не моя проблема.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Пока не ваша. Но станет. — Пауза. — Вы умный человек, полковник. Умные люди видят дальше одного перегона.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Что именно вы предлагаете?</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Пока — ничего. Я просто делюсь наблюдением. — Он снова помолчал. — Москвин боится двух вещей: Ганзы и собственного Политбюро. Первое — рационально. Второе — предвестник. Человек, который боится своих, долго не правит.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Вы давно за ним наблюдаете.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Это моя работа. — Он чуть улыбнулся. — Спокойной ночи, товарищ полковник.</div>
+  <div class="dialogue-meta">// Разговор прерван. Фэйсяо не ответила. Ушла без слова. По оценке источника — задумалась. //</div>
+</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">РАЗГОВОР II // КАБИНЕТ НА «ДЗЕРЖИНСКОЙ»</span>
+        </div>
+        <div class="panel-body">
+          <div class="dialogue">
+  <div class="dialogue-meta">// Корбут — уже председатель Госбезопасности. Двери закрыты. Присутствующих больше нет. //</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Москвин сделал ошибку с анархистами. Недооценил. Дал им пространство, думал, что они управляемые. Они не управляемые. Я бы не недооценил, но я не принимаю решений такого уровня.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Пока не принимаете.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> — Долгая пауза. — Именно. — Он отложил бумаги. — Вы знаете, чем вы отличаетесь от других офицеров, которые думают то же самое что и вы?</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Тем, что говорю это вам в лицо.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Тем, что у вас есть то, чего нет у них. Авторитет, заработанный в бою, а не за столом. Солдаты идут за вами — не потому что приказали, а потому что хотят. Это редкость. Это ресурс. — Он встал, подошёл к карте. — Москвин этого не понимает. Он думает, что власть держится на страхе. Страх — расходный материал. Кончается.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Вы давно это планируете.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Я давно это анализирую. Планировать начал, когда встретил вас. — Пауза. — Нам нужен повод. Правильный повод. Не сфабрикованный, а найденный в его потёмках. Москвин сам его создаст. Такие люди всегда создают.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> И тогда вы придёте ко мне снова.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Тогда я приду к вам снова.</div>
+  <div class="dialogue-meta">// После этого разговора встречи становятся регулярными. Официальный предлог — координация операций КГБ и армии. //</div>
+</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">РАЗГОВОР III // ПОСЛЕ ИНЦИДЕНТА С ПОЕЗДОМ ЛЕНИНА</span>
+        </div>
+        <div class="panel-body">
+          <div style="font-size: 11px; color: var(--text-dim); margin-bottom: 10px; line-height: 1.6;">Анархисты угнали траурный состав. Тело Ленина под завалами. По всей линии — шёпот. КГБ не успевает. Корбут приходит без вызова.</div>
+          <div class="dialogue">
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Момент настал. Я думал, у нас есть ещё год. Оказалось — нет.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Анархисты впервые сыграли нам на руку. Случайно.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Случайно — не аргумент в нашу пользу. Случайность нельзя повторить, но использовать её можно. Даже нужно. — Он сел напротив, без предисловий. — Политбюро в панике. Москвин созывает заседание за заседанием и не принимает ни одного решения. Армия ждёт приказа — приказа нет. КГБ докладывает о волнениях на трёх станциях. Система трещит.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Нам нужен враг.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Нам нужен враг, которого все увидят. Рейх видят все. Рейх ненавидят все — даже те, кто ненавидит нас. Достаточно сказать, что тело Ленина их работа, и половина проблемы решена. Армия получит причину. Народ получит ненависть. Политбюро получит повод проголосовать за смену руководства. — Пауза. — Всё остальное сделают они сами.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> А что получу я?</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Государство, которым можно управлять. Линию без балласта. Генерального секретаря, у которого есть цель за пределами лозунгов. — Он чуть помолчал. — Я получу свободу действий. Это честный обмен.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> — Долгое молчание. — Если мы это делаем — делаем один раз и правильно. Никаких следов. Никаких свидетелей, которые потом вспомнят лишнее. Никакого театра после. Я не хочу трибунала над Москвиным. Публичный процесс — это спектакль, а спектакли запоминают. Я хочу, чтобы через двадцать лет никто не помнил, что был другой путь.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Тихое заседание. Закрытое голосование. Приговор без огласки. — Он кивнул. — Именно так я и планировал.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Ещё одно. После, Генерал, вы получаете свободу действий в рамках того, что я одобряю. Не шире.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> — Пауза. Лёгкая улыбка. — Разумеется, товарищ Генеральный Секретарь.</div>
+  <div class="dialogue-line"><span class="speaker">ФЭЙСЯО:</span> Пока ещё полковник.</div>
+  <div class="dialogue-line"><span class="speaker">КОРБУТ:</span> Пока.</div>
+  <div class="dialogue-meta">// Разговор окончен. По оценке источника — договорённость достигнута. Операция «Генсек» переходит в активную фазу. //</div>
+</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ИТОГ ОПЕРАЦИИ</span>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <span class="field-label">обвинение</span>
+            <span class="field-value">Коррупция и отступление от линии партии</span>
+          </div>
+          <div class="field">
+            <span class="field-label">приговор</span>
+            <span class="field-value red">Расстрел. Исполнен.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">заседание политбюро</span>
+            <span class="field-value">Закрытое. Результат предрешён заранее.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">факт заговора</span>
+            <span class="field-value green">СКРЫТ ПОЛНОСТЬЮ</span>
+          </div>
+          <div class="field">
+            <span class="field-label">истинные похитители тела ленина</span>
+            <span class="field-value"><span class="redacted">АНАРХИСТЫ // ИСТОЧНИК АГЕНТ «ТИХОНЯ»</span></span>
+          </div>
+          <div class="field">
+            <span class="field-label">официальная версия</span>
+            <span class="field-value">Тело похищено Четвёртым Рейхом. Используется как casus belli.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">текущий союз</span>
+            <span class="field-value">Корбут — силовой блок. Фэйсяо — политика. Система функционирует.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MEDICAL -->
+    <div class="section" id="section-medical">
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">МЕД. КАРТА // СОВЕРШЕННО СЕКРЕТНО</span>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <span class="field-label">диагноз</span>
+            <span class="field-value red">Наследственная эпилепсия гиппокампального типа, усугублённая ЧМТ (2013 г.)</span>
+          </div>
+          <div class="field">
+            <span class="field-label">этиология</span>
+            <span class="field-value">Наследственная предрасположенность + черепно-мозговая травма в ходе инцидента на объекте «Шёлкового Щита» + хронический стресс после катастрофы</span>
+          </div>
+          <div class="field">
+            <span class="field-label">частота приступов</span>
+            <span class="field-value amber">Нерегулярно. Учащение при стрессе, недосыпании, физическом истощении.</span>
+          </div>
+          <div class="field">
+            <span class="field-label">факт скрытия</span>
+            <span class="field-value">Скрывает симптомы на протяжении многих лет. Рапортов не подавала.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">КЛИНИЧЕСКАЯ КАРТИНА</span>
+        </div>
+        <div class="panel-body">
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-date">СТАДИЯ I — ПРЕДВЕСТНИКИ</div>
+              <div class="tl-title">Металл на языке</div>
+              <div class="tl-text">Резкий, чистый вкус. Первый и самый надёжный предвестник. Даёт несколько секунд для реакции.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">СТАДИЯ II — НАРАСТАНИЕ</div>
+              <div class="tl-title">Ощущение плотности воздуха</div>
+              <div class="tl-text">Иррациональный, острый страх без конкретного объекта. Именно поэтому такой невыносимый. Несколько секунд на то, чтобы уйти от общества и избежать самых страшных последствий.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">СТАДИЯ III — ПРИСТУП</div>
+              <div class="tl-title">Белый шум. Потеря ориентации.</div>
+              <div class="tl-text">Мышцы сжимаются изнутри. Сознание уходит в белый шум. Иногда после приступа остаются синяки от собственных пальцев, содранные о камень колени, привкус крови от прикушенного языка или щеки.</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-date">СТАДИЯ IV — ПОСТИКТАЛЬНЫЙ ПЕРИОД</div>
+              <div class="tl-title">Медленное возвращение</div>
+              <div class="tl-text">Несколько минут. Знает своё имя, но не сразу понимает, где находится. В это время может быть опасна для простого человека. Именно поэтому — только тоннели, только темнота, никого рядом. Это единственное правило, которое она не нарушает.</div>
+            </div>
+          </div>
+          <div class="dialogue" style="border-left-color: var(--red); margin-top: 10px;">
+            <div class="dialogue-meta">// ПРИМЕЧАНИЕ: ПОСТИКТАЛЬНЫЙ ДНЕВНИК //</div>
+            <div class="dialogue-line">В дневнике субъекта зафиксированы страницы, написанные незнакомым почерком — формально её собственным, но будто чужим: буквы крупнее, строки заваливаются вправо, текст на китайском. Постиктальные записи пишутся в те несколько минут после, когда сознание вернулось, но ещё не здесь. Иногда там что-то важное. Иногда наблюдения о поведении крыс. Иногда она называет себя Саран в них.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon"></div>
+          <span class="panel-title">ИНЦИДЕНТ С БОЙЦОМ</span>
+        </div>
+        <div class="panel-body">
+          <div class="bio-text">
+            Однажды один из её бойцов — молодой, из первых, кто присоединился ещё на «Красных Воротах» — последовал за ней во время приступа. Из слепого желания помочь, приправленного преданностью командиру. Он потом сказал, что не помнит точно, что именно произошло. У него осталась сломанная ключица и неловкое молчание, которое между ними держится до сих пор. Она извинилась один раз. Коротко, без объяснений. Он принял. Больше никто не следует.
+          </div>
+          <div style="margin-top: 10px; padding: 8px; border: 1px solid var(--red-dim); background: var(--red-glow);">
+            <span style="font-size: 9px; letter-spacing: 2px; color: var(--red);">ОПЕРАТИВНОЕ ЗАМЕЧАНИЕ:</span>
+            <p style="font-size: 11px; color: var(--text-dim); margin-top: 4px; line-height: 1.6;">Личность бойца установлена. Данные занесены в закрытый реестр. Медицинское освидетельствование — <span class="redacted">ЗАСЕКРЕЧЕНО</span>. Инцидент в официальный рапорт не включён.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </div>
 
 <div class="footer">
@@ -406,5 +1304,24 @@
   <span>ДОС-КЛ-2033-009</span>
 </div>
 
+<script>
+function showSection(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  el.classList.add('active');
+}
+  function togglePanel(el) {
+  if (window.innerWidth > 768) return; 
+
+  const body = el.nextElementSibling;
+
+  if (body.style.display === 'none') {
+    body.style.display = 'block';
+  } else {
+    body.style.display = 'none';
+  }
+}
+</script>
 </body>
 </html>
